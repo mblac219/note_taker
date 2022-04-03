@@ -1,11 +1,13 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-const notes = require('./db/db.json');
+const notes = require('./db.json');
 const uuid = require('uuid');
 
 const app = express( );
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+//Middleware
+app.use(express.static('public'));
 
 let noteTitle;
 let noteText;
@@ -14,7 +16,7 @@ let newNoteBtn;
 let noteList;
 
 //Return to index page
-app.get('/', (req, res) =>
+app.get('/index', (req, res) =>
   res.sendFile(path.join(__dirname, 'public/index.html'))
 );
 //Return to notes pages
@@ -34,7 +36,7 @@ app.delete('/api/notes/:id', (req, res) =>
   res.sendFile(path.join(__dirname, 'db/db.json'))
 );
 app.listen(PORT, () =>
-  console.log(`Listening for request on port ${PORT}!`)
+  console.log(`Serving static asset routes at http://localhost:${PORT}!`)
 );
 
 if (window.location.pathname === '/notes') {
