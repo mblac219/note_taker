@@ -1,7 +1,8 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-const notes = require('./db/db.json')
+const notes = require('./db/db.json');
+const uuid = require('uuid');
 
 const app = express( );
 const PORT = process.env.PORT || 3000;
@@ -24,10 +25,16 @@ app.get('/api/notes', (req, res) =>
   res.sendFile(path.join(__dirname, 'db/db.json'))
 );
 
-app.listen(PORT, () =>
-  console.log(`Example app listening at http://localhost:${PORT}`)
-);
+app.post('/api/reviews', (req, res) => {
+  
+  res.json(`${req.method} request received to add a review`);
 
+  console.info(`${req.method} request received to add a review`);
+});
+
+app.listen(PORT, () =>
+  console.log(`Express server listening on port ${PORT}!`)
+);
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
