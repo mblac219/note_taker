@@ -1,9 +1,10 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
+const notes = require('./db/db.json')
 
 const app = express( );
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 let noteTitle;
 let noteText;
@@ -11,16 +12,20 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
+
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, 'public/index.html'))
+);
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, 'public/notes.html'))
 );
 
-app.get('/home', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-);
-
 app.get('/api/notes', (req, res) =>
   res.sendFile(path.join(__dirname, 'db/db.json'))
+);
+
+app.listen(PORT, () =>
+  console.log(`Example app listening at http://localhost:${PORT}`)
 );
 
 
